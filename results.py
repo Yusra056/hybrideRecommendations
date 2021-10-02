@@ -1,18 +1,20 @@
 import pandas as pd
 import csv
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer #Term Frequency and Inverse Document Frequency
 from sklearn.metrics.pairwise import cosine_similarity, linear_kernel
 
-df = pd.read_csv('C:\\Users\\IA\\Desktop\\Books\\Final Year Project\\code\\project\\dataset_books.csv', low_memory = False)
+df = pd.read_csv('C:\\Users\\IA\\Desktop\\Books\\Final Year Project\\code\\project\\books_dataset.csv', low_memory = False)
 
 # stop words removing that is the a is
 tfidf = TfidfVectorizer(stop_words= 'english')
+
+#genre , book_desc
   
 #nan words with empty string
-df['book_desc'] = df['book_desc'].fillna('')
+df['genres'] = df['genres'].fillna('')
 
 # TF and IDF construction
-tfidf_matrix= tfidf.fit_transform(df['book_desc'])
+tfidf_matrix= tfidf.fit_transform(df['genres'])
 
 #computating cosine similarity matrix
 cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
@@ -33,13 +35,17 @@ def create_contentBase_recommendations(title, cosine_sim=cosine_sim):
     similarity_score = sorted(similarity_score, key=lambda x: x[1], reverse=True)
 
     #get the 15 most similar books
-    similarity_score = similarity_score[1:16]
+    similarity_score = similarity_score[1:9]
 
     #get the books indices
     book_indices = [i[0] for i in similarity_score]
 
-    #return the top 15 similar books
+    #return the top 9 similar books
     return df['book_title'].iloc[book_indices]
 
-print(create_contentBase_recommendations('The Alchemist'))
+#a = 'Divergent'
+#print(create_contentBase_recommendations(a))
 
+#The Alchemist
+#Divergent
+#Chaos: Making a New Science
