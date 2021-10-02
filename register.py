@@ -76,7 +76,8 @@ class register:
                 cursor.execute("select * from user where user_username=%s", self.username_textfield.get())
                 row = cursor.fetchone()
                 if row != None:
-                    messagebox.showerror("Error", "User already exists with the cureent username. Pleae try another", parent = self.root)
+                    messagebox.showerror("Error", "User already exists with the current username. Pleae try another", parent = self.root)
+                
                 else:
                     cursor.execute("insert into user (user_name, user_username, user_email, user_contactNo, user_password) values (%s,%s,%s,%s,%s)", 
                     (
